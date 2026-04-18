@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Para Angie 🌸</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --rosa:   #f472b6;
+      --rosa2:  #ec4899;
+      --dorado: #d4a96a;
+      --fondo:  #08040f;
+      --fondo2: #120820;
+      --card:   #160d24;
+      --texto:  #f5e0ef;
+      --suave:  #2a1040;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--fondo);
+      color: var(--texto);
+      font-family: 'Lato', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ── CORAZONES FLOTANTES ── */
+    #corazones {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .corazon {
+      position: absolute;
+      bottom: -60px;
+      animation: flotar linear infinite;
+      opacity: 0;
+      user-select: none;
+    }
+    @keyframes flotar {
+      0%   { transform: translateY(0) rotate(-5deg); opacity: 0.75; }
+      100% { transform: translateY(-110vh) rotate(15deg); opacity: 0; }
+    }
+
+    /* ── HERO ── */
+    #hero {
+      position: relative;
+      z-index: 1;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem 1.5rem;
+      background: radial-gradient(ellipse at 50% 40%, #2a0d40 0%, #120820 50%, var(--fondo) 100%);
+    }
+
+    .petalo-deco {
+      font-size: clamp(2.5rem, 9vw, 5rem);
+      line-height: 1;
+      margin-bottom: 0.75rem;
+      animation: latir 2s ease-in-out infinite;
+      filter: drop-shadow(0 0 18px rgba(244,114,182,0.6));
+    }
+    @keyframes latir {
+      0%, 100% { transform: scale(1); }
+      50%       { transform: scale(1.12); }
+    }
+
+    #titulo-principal {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3rem, 13vw, 6rem);
+      font-weight: 700;
+      line-height: 1.1;
+      background: linear-gradient(135deg, #f9a8d4, #f472b6, #d4a96a, #f472b6);
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: shimmer 4s ease-in-out infinite;
+      margin-bottom: 0.6rem;
+    }
+    @keyframes shimmer {
+      0%,100% { background-position: 0% 50%; }
+      50%      { background-position: 100% 50%; }
+    }
+
+    #subtitulo {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: clamp(1.1rem, 4.5vw, 1.6rem);
+      color: #f9a8d4;
+      margin-bottom: 1rem;
+      opacity: 0;
+      animation: aparecer 1s ease 0.8s forwards;
+    }
+
+    .fecha-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, rgba(244,114,182,0.2), rgba(212,169,106,0.2));
+      border: 1px solid rgba(244,114,182,0.4);
+      color: #f9a8d4;
+      padding: 0.45rem 1.4rem;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      font-weight: 300;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 0.6rem;
+      opacity: 0;
+      animation: aparecer 1s ease 1.1s forwards;
+      backdrop-filter: blur(6px);
+    }
+
+    .fecha-aniv {
+      display: inline-block;
+      background: linear-gradient(135deg, rgba(212,169,106,0.18), rgba(244,114,182,0.18));
+      border: 1px solid rgba(212,169,106,0.45);
+      color: var(--dorado);
+      padding: 0.4rem 1.2rem;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      opacity: 0;
+      animation: aparecer 1s ease 1.4s forwards;
+    }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 1.6rem;
+      animation: rebotar 1.5s ease-in-out infinite;
+      opacity: 0.4;
+      color: var(--rosa);
+    }
+    @keyframes rebotar {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50%       { transform: translateX(-50%) translateY(8px); }
+    }
+    @keyframes aparecer {
+      from { opacity: 0; transform: translateY(15px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── SECCIONES GENERALES ── */
+    section {
+      position: relative;
+      z-index: 1;
+      padding: 4rem 1.5rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .seccion-titulo {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.5rem, 6vw, 2.2rem);
+      text-align: center;
+      margin-bottom: 2rem;
+      color: #f9a8d4;
+      text-shadow: 0 0 30px rgba(244,114,182,0.3);
+    }
+    .seccion-titulo::after {
+      content: '';
+      display: block;
+      width: 60px;
+      height: 2px;
+      background: linear-gradient(to right, var(--rosa), var(--dorado));
+      margin: 0.5rem auto 0;
+      border-radius: 2px;
+    }
+
+    /* ── NOTA DE AMOR ── */
+    #nota {
+      background: var(--card);
+      border-radius: 20px;
+      padding: 2.5rem 2rem;
+      box-shadow:
+        0 0 0 1px rgba(244,114,182,0.15),
+        0 4px 40px rgba(244,114,182,0.1),
+        inset 0 1px 0 rgba(255,255,255,0.05);
+      border-left: 3px solid var(--rosa);
+      position: relative;
+      overflow: hidden;
+    }
+    #nota::before {
+      content: '"';
+      font-family: 'Playfair Display', serif;
+      font-size: 10rem;
+      color: rgba(244,114,182,0.07);
+      position: absolute;
+      top: -2rem;
+      left: 0.3rem;
+      line-height: 1;
+      pointer-events: none;
+    }
+    #nota-texto {
+      font-size: clamp(1rem, 3.5vw, 1.12rem);
+      line-height: 2;
+      font-weight: 300;
+      color: #e8c8dc;
+      white-space: pre-wrap;
+      position: relative;
+      z-index: 1;
+    }
+    .firma {
+      text-align: right;
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.05rem;
+      color: var(--rosa);
+      margin-top: 1.5rem;
+      text-shadow: 0 0 20px rgba(244,114,182,0.4);
+    }
+
+    /* ── GALERÍA ── */
+    #galeria-section { max-width: 1000px; }
+    .galeria-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 8px;
+    }
+    @media (max-width: 480px) {
+      .galeria-grid { grid-template-columns: repeat(3, 1fr); gap: 5px; }
+    }
+    .foto-item {
+      aspect-ratio: 1;
+      overflow: hidden;
+      border-radius: 10px;
+      cursor: pointer;
+      position: relative;
+      background: var(--suave);
+      border: 1px solid rgba(244,114,182,0.1);
+    }
+    .foto-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+      display: block;
+    }
+    .foto-item:hover img,
+    .foto-item:active img { transform: scale(1.08); }
+    .foto-item .overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(190,24,93,0.5) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .foto-item:hover .overlay,
+    .foto-item:active .overlay { opacity: 1; }
+
+    /* ── MÚSICA ── */
+    #musica-section { text-align: center; }
+    .music-card {
+      background: var(--card);
+      border-radius: 20px;
+      padding: 2rem 1.5rem;
+      box-shadow:
+        0 0 0 1px rgba(212,169,106,0.15),
+        0 4px 40px rgba(212,169,106,0.08);
+    }
+    .music-note-deco {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      filter: drop-shadow(0 0 12px rgba(244,114,182,0.5));
+    }
+    #musica-titulo {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.2rem;
+      color: #f9a8d4;
+      margin-bottom: 1.5rem;
+    }
+    #player-container {
+      display: flex;
+      justify-content: center;
+    }
+    #player-container iframe { border-radius: 12px; max-width: 100%; }
+    .music-placeholder {
+      color: #7a5470;
+      font-size: 0.9rem;
+      padding: 1.2rem;
+      border: 1px dashed rgba(244,114,182,0.25);
+      border-radius: 12px;
+      font-style: italic;
+    }
+
+    /* ── MENSAJE FINAL ── */
+    #final {
+      text-align: center;
+      padding-bottom: 7rem;
+    }
+    .big-heart {
+      font-size: clamp(4rem, 15vw, 7rem);
+      animation: latir 1.5s ease-in-out infinite;
+      display: block;
+      margin-bottom: 1rem;
+      filter: drop-shadow(0 0 30px rgba(244,114,182,0.6));
+    }
+    .frase-final {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: clamp(1.2rem, 5vw, 1.7rem);
+      color: #f9a8d4;
+      line-height: 1.7;
+      text-shadow: 0 0 40px rgba(244,114,182,0.25);
+    }
+
+    /* ── DIVISORES ── */
+    .divisor {
+      text-align: center;
+      font-size: 1.2rem;
+      letter-spacing: 0.6rem;
+      opacity: 0.25;
+      margin: 0;
+      padding: 0.5rem 0;
+      color: var(--rosa);
+    }
+
+    /* ── LIGHTBOX ── */
+    #lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      background: rgba(0,0,0,0.96);
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+    #lightbox.activo { display: flex; }
+    #lightbox img {
+      max-width: min(95vw, 800px);
+      max-height: 90dvh;
+      border-radius: 12px;
+      object-fit: contain;
+      box-shadow: 0 0 80px rgba(244,114,182,0.25);
+    }
+    #lightbox-close {
+      position: absolute;
+      top: 1rem; right: 1rem;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 0.5rem 0.8rem;
+      border-radius: 10px;
+      line-height: 1;
+      backdrop-filter: blur(6px);
+    }
+    #lightbox-prev, #lightbox-next {
+      position: absolute;
+      top: 50%; transform: translateY(-50%);
+      background: rgba(244,114,182,0.12);
+      border: 1px solid rgba(244,114,182,0.2);
+      color: white;
+      font-size: 2rem;
+      cursor: pointer;
+      padding: 1rem 0.8rem;
+      border-radius: 12px;
+      backdrop-filter: blur(6px);
+    }
+    #lightbox-prev { left: 0.5rem; }
+    #lightbox-next { right: 0.5rem; }
+
+    /* ── BOTÓN EDITAR ── */
+    #btn-editar {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      z-index: 500;
+      background: rgba(236,72,153,0.15);
+      color: #f9a8d4;
+      border: 1px solid rgba(244,114,182,0.3);
+      border-radius: 999px;
+      padding: 0.65rem 1.2rem;
+      font-size: 0.85rem;
+      font-family: 'Lato', sans-serif;
+      cursor: pointer;
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    #btn-editar:hover {
+      background: rgba(236,72,153,0.28);
+      border-color: rgba(244,114,182,0.6);
+    }
+
+    /* ── MODAL EDITAR ── */
+    #modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 900;
+      background: rgba(0,0,0,0.75);
+      backdrop-filter: blur(6px);
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+    #modal-overlay.activo { display: flex; }
+    #modal {
+      background: var(--card);
+      border: 1px solid rgba(244,114,182,0.2);
+      border-radius: 20px;
+      padding: 2rem 1.5rem;
+      width: 100%;
+      max-width: 520px;
+      max-height: 90dvh;
+      overflow-y: auto;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 0 0 1px rgba(244,114,182,0.1);
+    }
+    #modal h2 {
+      font-family: 'Playfair Display', serif;
+      color: #f9a8d4;
+      margin-bottom: 1.5rem;
+      font-size: 1.4rem;
+    }
+    .campo { margin-bottom: 1.1rem; }
+    .campo label {
+      display: block;
+      font-size: 0.78rem;
+      color: #9d6a8a;
+      margin-bottom: 0.35rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .campo input,
+    .campo textarea {
+      width: 100%;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(244,114,182,0.2);
+      border-radius: 10px;
+      padding: 0.7rem 1rem;
+      font-family: 'Lato', sans-serif;
+      font-size: 0.95rem;
+      color: var(--texto);
+      outline: none;
+      transition: border-color 0.2s;
+      resize: vertical;
+    }
+    .campo input:focus,
+    .campo textarea:focus { border-color: var(--rosa); }
+    .campo textarea { min-height: 130px; }
+    .campo small { display: block; color: #6b445e; font-size: 0.76rem; margin-top: 0.3rem; }
+    .modal-botones { display: flex; gap: 0.75rem; margin-top: 1.5rem; }
+    .btn-guardar {
+      flex: 1;
+      background: linear-gradient(135deg, var(--rosa2), #be185d);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      padding: 0.85rem;
+      font-family: 'Lato', sans-serif;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .btn-guardar:hover { opacity: 0.9; }
+    .btn-cancelar {
+      background: rgba(255,255,255,0.05);
+      color: #f9a8d4;
+      border: 1px solid rgba(244,114,182,0.2);
+      border-radius: 10px;
+      padding: 0.85rem 1.2rem;
+      font-family: 'Lato', sans-serif;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    .btn-reset {
+      background: none;
+      border: none;
+      color: #6b445e;
+      font-size: 0.78rem;
+      cursor: pointer;
+      text-decoration: underline;
+      display: block;
+      margin-top: 1rem;
+      font-family: 'Lato', sans-serif;
+    }
+
+    /* ── FADE-IN AL SCROLL ── */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body>
+
+<div id="corazones"></div>
+
+<!-- LIGHTBOX -->
+<div id="lightbox" role="dialog" aria-modal="true">
+  <button id="lightbox-close" aria-label="Cerrar">✕</button>
+  <button id="lightbox-prev" aria-label="Anterior">‹</button>
+  <img id="lightbox-img" src="" alt="Foto">
+  <button id="lightbox-next" aria-label="Siguiente">›</button>
+</div>
+
+<!-- MODAL EDITAR -->
+<div id="modal-overlay" role="dialog" aria-modal="true">
+  <div id="modal">
+    <h2>✏️ Editar página</h2>
+    <div class="campo">
+      <label>Título principal</label>
+      <input type="text" id="edit-titulo" placeholder="Feliz Cumpleaños, Angie">
+    </div>
+    <div class="campo">
+      <label>Subtítulo</label>
+      <input type="text" id="edit-subtitulo" placeholder="mi amor eterno">
+    </div>
+    <div class="campo">
+      <label>Fecha de cumpleaños</label>
+      <input type="text" id="edit-fecha" placeholder="17 de abril · 2026">
+    </div>
+    <div class="campo">
+      <label>Nota de amor</label>
+      <textarea id="edit-nota"></textarea>
+    </div>
+    <div class="campo">
+      <label>Firma</label>
+      <input type="text" id="edit-firma" placeholder="Con todo mi amor, Joaquín">
+    </div>
+    <div class="campo">
+      <label>Frase final</label>
+      <textarea id="edit-frase-final" rows="3"></textarea>
+    </div>
+    <div class="campo">
+      <label>Canción — YouTube Video ID</label>
+      <input type="text" id="edit-youtube" placeholder="ej: 2Vv-BfVoq4g">
+      <small>Solo el ID del video (lo que va después de ?v= en YouTube). Dejalo vacío para ocultar el reproductor.</small>
+    </div>
+    <div class="campo">
+      <label>Nombre de la canción</label>
+      <input type="text" id="edit-cancion-nombre" placeholder="ej: Perfect · Ed Sheeran">
+    </div>
+    <div class="modal-botones">
+      <button class="btn-guardar" onclick="guardarCambios()">Guardar 💾</button>
+      <button class="btn-cancelar" onclick="cerrarModal()">Cancelar</button>
+    </div>
+    <button class="btn-reset" onclick="resetearCambios()">↺ Volver a los valores originales</button>
+  </div>
+</div>
+
+<!-- BOTÓN EDITAR -->
+<button id="btn-editar" onclick="abrirModal()">✏️ Editar</button>
+
+<!-- ═══ HERO ═══ -->
+<div id="hero">
+  <div class="petalo-deco">🌸</div>
+  <h1 id="titulo-principal">Feliz Cumpleaños,<br>Angie</h1>
+  <p id="subtitulo">mi amor eterno</p>
+  <span id="fecha-badge" class="fecha-badge">17 de abril · 2026</span><br>
+  <span class="fecha-aniv">✨ 9 de agosto · nuestro primer año ✨</span>
+  <div class="scroll-hint">↓</div>
+</div>
+
+<!-- ═══ NOTA ═══ -->
+<section class="fade-in">
+  <h2 class="seccion-titulo">Una carta para vos</h2>
+  <div id="nota">
+    <p id="nota-texto"></p>
+    <p class="firma" id="firma-texto">Con todo mi amor, Joaquín 💕</p>
+  </div>
+</section>
+
+<div class="divisor">· · · 🌸 · · ·</div>
+
+<!-- ═══ GALERÍA ═══ -->
+<section id="galeria-section" class="fade-in">
+  <h2 class="seccion-titulo">Nuestros momentos</h2>
+  <div class="galeria-grid" id="galeria"></div>
+</section>
+
+<div class="divisor">· · · 💕 · · ·</div>
+
+<!-- ═══ MÚSICA ═══ -->
+<section id="musica-section" class="fade-in">
+  <h2 class="seccion-titulo">Nuestra canción</h2>
+  <div class="music-card">
+    <div class="music-note-deco">🎵</div>
+    <p id="musica-titulo">la banda sonora de lo nuestro</p>
+    <div id="player-container">
+      <div class="music-placeholder" id="music-placeholder">
+        Usá el botón ✏️ Editar para agregar el ID de YouTube de tu canción.
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divisor">· · · ✨ · · ·</div>
+
+<!-- ═══ FINAL ═══ -->
+<section id="final" class="fade-in">
+  <span class="big-heart">❤️</span>
+  <p class="frase-final" id="frase-final-texto">
+    Gracias por existir y por hacer que cada día<br>
+    valga la pena con solo estar cerca.<br>
+    Te amo infinito, Angie.
+  </p>
+</section>
+
+<script>
+  const DEFAULTS = {
+    titulo:        "Feliz Cumpleaños,\nAngie",
+    subtitulo:     "mi amor eterno",
+    fecha:         "17 de abril · 2026",
+    nota: `Angie,
+
+Hoy es tu día y quería que sepas lo mucho que significás para mí. Desde que apareciste, el mundo tiene otro color — uno más lindo, más cálido, más tuyo.
+
+Me encanta la manera en que reís, cómo mirás las cosas, la forma en que hacés que hasta los momentos más simples se conviertan en algo especial. Sos de esas personas que cambian todo sin darse cuenta.
+
+Este año que pasó con vos fue uno de los mejores de mi vida. Y espero que los que vienen sean todavía mejores, porque quiero vivirlos todos a tu lado.
+
+Feliz cumpleaños, amor.`,
+    firma:         "Con todo mi amor, Joaquín 💕",
+    fraseFinal:    "Gracias por existir y por hacer que cada día\nvalga la pena con solo estar cerca.\nTe amo infinito, Angie.",
+    youtubeId:     "",
+    cancionNombre: "",
+  };
+
+  const FOTOS = [
+    "169d74f9-9e0b-4444-b7d0-009eb9ac176f.JPG",
+    "27115BA3-4310-4467-B0CD-676315CC4A46.JPG",
+    "4236C226-48D6-4B69-8534-090D847C8D5E.JPG",
+    "49bd8947-f09c-49e3-8090-6589f356b35d.jpg",
+    "7DF71056-7F5E-41E9-9068-33DC7A29E00D.PNG",
+    "7e4a2b7e-d8e6-4b19-a916-910690bfb952.JPG",
+    "8D103A3E-72AB-4284-9F50-7807008BCF95.JPG",
+    "8b15cd20-b618-434a-b4e8-72456d937b16.JPG",
+    "9884a526-c4be-41e5-bf32-401f038c2d63.JPG",
+    "A3A6D5C6-B9CA-49C6-A57D-82086AA97AF8.PNG",
+    "A844CF34-13E5-421C-9D73-DFA4B2656853.PNG",
+    "ABF65731-76A4-46D9-BDE6-BD09DC4BC3D7.jpg",
+    "IMG-20250701-WA0000_Original.jpg",
+    "IMG-20250802-WA0048(1)_Original.jpg",
+    "IMG-20250826-WA0084(1)_Original.jpg",
+    "IMG-20251008-WA0055_Original.jpg",
+    "IMG-20251008-WA0057_Original.jpg",
+    "IMG-20251017-WA0077_Original.jpg",
+    "IMG_0221.HEIC",
+    "IMG_0243.HEIC",
+    "IMG_0275.HEIC",
+    "IMG_0276.HEIC",
+    "IMG_0277.HEIC",
+    "IMG_0282.HEIC",
+    "IMG_0284.HEIC",
+    "IMG_0287.HEIC",
+    "IMG_0288.HEIC",
+    "IMG_0726.heic",
+    "IMG_0728.HEIC",
+    "IMG_0764.HEIC",
+    "IMG_0765.HEIC",
+    "IMG_0766.HEIC",
+    "IMG_0832.jpg",
+    "IMG_1294.HEIC",
+    "IMG_1295.HEIC",
+    "IMG_1296.HEIC",
+    "IMG_1497.HEIC",
+    "IMG_1498.HEIC",
+    "IMG_1502.HEIC",
+    "IMG_1503.HEIC",
+    "IMG_1507.HEIC",
+    "IMG_1508.HEIC",
+    "IMG_1513.HEIC",
+    "IMG_1514.HEIC",
+    "IMG_1516.HEIC",
+    "IMG_1932.HEIC",
+    "IMG_2232.heic",
+    "IMG_2234.heic",
+    "IMG_2236.HEIC",
+    "IMG_2237.HEIC",
+    "IMG_2238.heic",
+    "IMG_2250.HEIC",
+    "IMG_2253.HEIC",
+    "IMG_2257.HEIC",
+    "IMG_2258.HEIC",
+    "IMG_2259.HEIC",
+    "IMG_2260.heic",
+    "IMG_2407.HEIC",
+    "IMG_2412.HEIC",
+    "IMG_2642.HEIC",
+    "IMG_2645.HEIC",
+    "d6eb73c3-0614-4654-b8e1-f742f787129c.JPG",
+  ];
+
+  function cargarEstado() {
+    try { return { ...DEFAULTS, ...JSON.parse(localStorage.getItem("angie_config") || "{}") }; }
+    catch { return { ...DEFAULTS }; }
+  }
+  function guardarEstado(d) { localStorage.setItem("angie_config", JSON.stringify(d)); }
+
+  function renderizar(s) {
+    document.getElementById("titulo-principal").innerHTML = s.titulo.replace(/\n/g, "<br>");
+    document.getElementById("subtitulo").textContent      = s.subtitulo;
+    document.getElementById("fecha-badge").textContent    = s.fecha;
+    document.getElementById("nota-texto").textContent     = s.nota;
+    document.getElementById("firma-texto").textContent    = s.firma;
+    document.getElementById("frase-final-texto").innerHTML= s.fraseFinal.replace(/\n/g, "<br>");
+
+    const playerDiv   = document.getElementById("player-container");
+    const placeholder = document.getElementById("music-placeholder");
+    document.getElementById("musica-titulo").textContent  = s.cancionNombre || "la banda sonora de lo nuestro";
+
+    if (s.youtubeId && s.youtubeId.trim()) {
+      placeholder.style.display = "none";
+      let iframe = document.getElementById("yt-iframe");
+      if (!iframe) {
+        iframe = document.createElement("iframe");
+        iframe.id = "yt-iframe";
+        iframe.width = "100%";
+        iframe.height = "200";
+        iframe.style.maxWidth = "560px";
+        iframe.frameBorder = "0";
+        iframe.allow = "autoplay; encrypted-media";
+        iframe.allowFullscreen = true;
+        playerDiv.appendChild(iframe);
+      }
+      iframe.src = `https://www.youtube-nocookie.com/embed/${s.youtubeId.trim()}?rel=0&color=white`;
+    } else {
+      placeholder.style.display = "";
+      const iframe = document.getElementById("yt-iframe");
+      if (iframe) iframe.src = "";
+    }
+  }
+
+  // Galería
+  let indiceActual = 0;
+  function construirGaleria() {
+    const grid = document.getElementById("galeria");
+    grid.innerHTML = "";
+    FOTOS.forEach((nombre, i) => {
+      const ruta = "fotos%20angie/" + encodeURIComponent(nombre);
+      const item = document.createElement("div");
+      item.className = "foto-item";
+      item.innerHTML = `<img src="${ruta}" alt="Foto ${i+1}" loading="lazy"><div class="overlay"></div>`;
+      item.addEventListener("click", () => abrirLightbox(i));
+      item.querySelector("img").addEventListener("error", () => item.remove());
+      grid.appendChild(item);
+    });
+  }
+
+  // Lightbox
+  function abrirLightbox(i) {
+    indiceActual = i; mostrarFotoLightbox();
+    document.getElementById("lightbox").classList.add("activo");
+    document.body.style.overflow = "hidden";
+  }
+  function cerrarLightbox() {
+    document.getElementById("lightbox").classList.remove("activo");
+    document.body.style.overflow = "";
+  }
+  function mostrarFotoLightbox() {
+    document.getElementById("lightbox-img").src = "fotos%20angie/" + encodeURIComponent(FOTOS[indiceActual]);
+  }
+  document.getElementById("lightbox-close").addEventListener("click", cerrarLightbox);
+  document.getElementById("lightbox").addEventListener("click", e => { if (e.target === document.getElementById("lightbox")) cerrarLightbox(); });
+  document.getElementById("lightbox-prev").addEventListener("click", e => { e.stopPropagation(); indiceActual = (indiceActual - 1 + FOTOS.length) % FOTOS.length; mostrarFotoLightbox(); });
+  document.getElementById("lightbox-next").addEventListener("click", e => { e.stopPropagation(); indiceActual = (indiceActual + 1) % FOTOS.length; mostrarFotoLightbox(); });
+  document.addEventListener("keydown", e => {
+    if (!document.getElementById("lightbox").classList.contains("activo")) return;
+    if (e.key === "ArrowLeft")  { indiceActual = (indiceActual - 1 + FOTOS.length) % FOTOS.length; mostrarFotoLightbox(); }
+    if (e.key === "ArrowRight") { indiceActual = (indiceActual + 1) % FOTOS.length; mostrarFotoLightbox(); }
+    if (e.key === "Escape") cerrarLightbox();
+  });
+  let touchX = null;
+  document.getElementById("lightbox").addEventListener("touchstart", e => { touchX = e.touches[0].clientX; }, { passive: true });
+  document.getElementById("lightbox").addEventListener("touchend", e => {
+    if (touchX === null) return;
+    const diff = touchX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) { indiceActual = diff > 0 ? (indiceActual + 1) % FOTOS.length : (indiceActual - 1 + FOTOS.length) % FOTOS.length; mostrarFotoLightbox(); }
+    touchX = null;
+  }, { passive: true });
+
+  // Modal editar
+  function abrirModal() {
+    const s = cargarEstado();
+    document.getElementById("edit-titulo").value         = s.titulo;
+    document.getElementById("edit-subtitulo").value      = s.subtitulo;
+    document.getElementById("edit-fecha").value          = s.fecha;
+    document.getElementById("edit-nota").value           = s.nota;
+    document.getElementById("edit-firma").value          = s.firma;
+    document.getElementById("edit-frase-final").value    = s.fraseFinal;
+    document.getElementById("edit-youtube").value        = s.youtubeId;
+    document.getElementById("edit-cancion-nombre").value = s.cancionNombre;
+    document.getElementById("modal-overlay").classList.add("activo");
+    document.body.style.overflow = "hidden";
+  }
+  function cerrarModal() {
+    document.getElementById("modal-overlay").classList.remove("activo");
+    document.body.style.overflow = "";
+  }
+  function guardarCambios() {
+    const nuevo = {
+      titulo:        document.getElementById("edit-titulo").value,
+      subtitulo:     document.getElementById("edit-subtitulo").value,
+      fecha:         document.getElementById("edit-fecha").value,
+      nota:          document.getElementById("edit-nota").value,
+      firma:         document.getElementById("edit-firma").value,
+      fraseFinal:    document.getElementById("edit-frase-final").value,
+      youtubeId:     document.getElementById("edit-youtube").value.trim(),
+      cancionNombre: document.getElementById("edit-cancion-nombre").value,
+    };
+    guardarEstado(nuevo); renderizar(nuevo); cerrarModal();
+  }
+  function resetearCambios() {
+    if (!confirm("¿Volver a los valores originales? Se perderán tus cambios.")) return;
+    localStorage.removeItem("angie_config"); renderizar({ ...DEFAULTS }); cerrarModal();
+  }
+  document.getElementById("modal-overlay").addEventListener("click", e => { if (e.target === document.getElementById("modal-overlay")) cerrarModal(); });
+
+  // Corazones flotantes
+  const EMOJIS = ["🌸","🌺","🌷","💕","✨","🌸","🌸"];
+  function crearCorazon() {
+    const c = document.createElement("span");
+    c.className = "corazon";
+    c.textContent = EMOJIS[Math.floor(Math.random() * EMOJIS.length)];
+    c.style.left  = Math.random() * 100 + "vw";
+    const dur = 7 + Math.random() * 9;
+    c.style.animationDuration = dur + "s";
+    c.style.fontSize = (0.8 + Math.random() * 1.4) + "rem";
+    c.style.opacity = "0";
+    document.getElementById("corazones").appendChild(c);
+    setTimeout(() => c.remove(), dur * 1000);
+  }
+  setInterval(crearCorazon, 1000);
+  for (let i = 0; i < 6; i++) setTimeout(crearCorazon, i * 250);
+
+  // Fade-in scroll
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add("visible"); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll(".fade-in").forEach(el => observer.observe(el));
+
+  // Init
+  renderizar(cargarEstado());
+  construirGaleria();
+</script>
+</body>
+</html>
